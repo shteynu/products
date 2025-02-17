@@ -1,0 +1,35 @@
+<main class="container">
+  <header class="container-header">
+    <h1>{{'My - Store'}}</h1>
+  </header>
+  <section class="container-main-section">
+    <div class="container-main-section-action-bar">
+      <app-action-bar
+        (addProductEmitter)="addProduct($event)"
+        (sortProductsEmitter)="onSortChange($event)"
+        (searchProductsEmitter)="onSearchChange($event)"
+
+
+      ></app-action-bar>
+    </div>
+    <div class="container-main-section-product">
+    <ul class="container-main-section-product-list">
+      @for(product of getProductList(); track product.id; let index = $index){
+        <app-product
+          #product
+          [product]="product"
+          [index]="index"
+          (click)="selectProduct(product)"
+          (deleteProductEmitter)="deleteProduct($event)"
+        ></app-product>
+      }
+    </ul>
+    @if(detailsOpen()){
+    <aside class="container-main-section-product-details">
+      <app-product-details></app-product-details>
+    </aside>
+    }
+      </div>
+  </section>
+
+</main>

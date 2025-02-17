@@ -1,0 +1,16 @@
+<main class="main-section">
+  <div class="main-section-image">
+<img
+  src="{{imageScr()}}"
+  alt="" width="100"
+     height="100">
+  </div>
+  <div class="main-section-title">
+    <span>{{productData().name}}</span><br>
+    <span>{{productData().description}}</span>
+  </div>
+  <div class="main-section-button">
+      <button type="button" class="main-section-button-design"
+        (click)="deleteCard(productData())">Delete</button>
+  </div>
+</main>

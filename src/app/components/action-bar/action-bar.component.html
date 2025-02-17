@@ -1,0 +1,17 @@
+<section class="action-container">
+  <button type="button" class="action-container-button" (click)="addProduct()">+ Add</button>
+  <input
+    #inputSearch
+    type="text"
+    name="search"
+    class="action-container-textarea"
+    placeholder="Search products"
+  >
+  <div class="action-container-sort">
+    <label for="sort">Sort by:</label>
+    <select #select id="sort" class="action-container-sort-select" (change)="onSortChange(select.value)">
+      <option value="name">Name</option>
+      <option value="price">Price</option>
+    </select>
+  </div>
+</section>
