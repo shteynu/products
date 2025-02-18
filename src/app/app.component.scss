@@ -4,10 +4,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  //height: 100%;
 
   &-header {
-    border: 5px solid black;
+    border: 3px solid black;
     background-color: aqua;
     padding: 10px;
   }
@@ -20,24 +19,18 @@
     position: relative;
 
     &-action-bar{
-      //position: relative;
       margin-inline-start: 40px;
-      /*display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;*/
     }
 
     &-product{
       display: flex;
       gap: 10px;
-      justify-content: space-between;
-      align-items: center;
       width: 100%;
 
       &-list {
         display: flex;
         gap: 10px;
+        width: 100%;
         justify-content: center;
         flex-direction: column;
       }
