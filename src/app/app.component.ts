@@ -36,7 +36,7 @@ export class AppComponent {
       id: event,
       name: '',
       description: '',
-      price: 0,
+      price: '',
       creationDate: new Date().toISOString()
     }
     this.selectProduct(newProduct, `https://picsum.photos/seed/${newProduct.id}/200/300`);
@@ -48,7 +48,7 @@ export class AppComponent {
         this.productList = signal(this.productList().sort((a, b) => a.name.localeCompare(b.name)));
         break;
       case 'price':
-        this.productList = signal(this.productList().sort((a, b) => a.price - b.price));
+        this.productList = signal(this.productList().sort((a, b) => Number(a.price) - Number(b.price)));
         break;
         default:
         this.productList = this.productStore.productList;
@@ -76,5 +76,6 @@ export class AppComponent {
 
   saveProduct(event: IProduct): void {
     this.productStore.addOrEditProductToProductList(event);
+    this.detailsOpen.set(false);
   }
 }

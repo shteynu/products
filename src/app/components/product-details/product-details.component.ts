@@ -1,4 +1,4 @@
-import {Component, effect, input, OnInit, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, input, OnInit, output, signal} from '@angular/core';
 import {IProduct} from '../../product-store';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
@@ -8,7 +8,8 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
     ReactiveFormsModule
   ],
   templateUrl: './product-details.component.html',
-  styleUrl: './product-details.component.scss'
+  styleUrl: './product-details.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductDetailsComponent {
 
@@ -17,7 +18,7 @@ export class ProductDetailsComponent {
   productForm = new FormGroup({
     name: new FormControl('', Validators.required),
     description: new FormControl(''),
-    price: new FormControl(0, Validators.required),
+    price: new FormControl('', Validators.required),
   });
   saveProduct = output<IProduct>();
 
@@ -35,7 +36,7 @@ export class ProductDetailsComponent {
     if(product && this.productForm.valid) {
       product.name = this.productForm.get('name')?.value || '';
       product.description = this.productForm.get('description')?.value || '';
-      product.price = this.productForm.get('price')?.value || 0;
+      product.price = this.productForm.get('price')?.value || '';
       this.saveProduct.emit(product);
     }
 
@@ -45,7 +46,7 @@ export class ProductDetailsComponent {
     this.productForm.setValue({
       name: this.product()?.name || '',
       description: this.product()?.description || '',
-      price: this.product()?.price || 0,
+      price: this.product()?.price.toString() || '',
     });
   }
 

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, output, viewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, output, viewChild} from '@angular/core';
 import {debounceTime, fromEvent, map} from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -6,7 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
   selector: 'app-action-bar',
   imports: [],
   templateUrl: './action-bar.component.html',
-  styleUrl: './action-bar.component.scss'
+  styleUrl: './action-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActionBarComponent implements AfterViewInit{
 

@@ -1,4 +1,5 @@
-<main class="product-container">
+<fieldset class="product-container">
+  <legend>{{product()?.name + ' Description'}}</legend>
   <img src="{{prodImg()}}" alt="" width="100"
        height="100">
   <form class="product-container-form" [formGroup]="productForm" (ngSubmit)="onSubmit()">
@@ -14,4 +15,4 @@
   </form>
 
   <button type="button" (click)="onSubmit()">Save</button>
-</main>
+</fieldset>
