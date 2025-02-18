@@ -13,10 +13,16 @@ export class ProductComponent {
   index = input.required<number>()
   imageScr = computed(() => `https://picsum.photos/seed/${this.product().id}/200/300`);
   productData = computed(() => this.product());
-  deleteProductEmitter = output<string>()
+  deleteProductEmitter = output<string>();
+  onCardClickEmitter = output<IProduct>();
 
-  deleteCard(iProduct: IProduct): void {
+  deleteCard(event: MouseEvent, iProduct: IProduct): void {
+    event.stopPropagation();
     this.deleteProductEmitter.emit(iProduct.id);
 
+  }
+
+  onCardClick(event: MouseEvent) {
+    this.onCardClickEmitter.emit(this.product());
   }
 }

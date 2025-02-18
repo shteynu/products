@@ -14,19 +14,23 @@
     </div>
     <div class="container-main-section-product">
     <ul class="container-main-section-product-list">
-      @for(product of getProductList(); track product.id; let index = $index){
+      @for(product of productList(); track product.id; let index = $index){
         <app-product
-          #product
+          #productRef
           [product]="product"
           [index]="index"
-          (click)="selectProduct(product)"
+          (onCardClickEmitter)="selectProduct($event, productRef.imageScr())"
           (deleteProductEmitter)="deleteProduct($event)"
         ></app-product>
       }
     </ul>
     @if(detailsOpen()){
     <aside class="container-main-section-product-details">
-      <app-product-details></app-product-details>
+      <app-product-details
+      [product]="selectedProduct()?.product"
+      [prodImg]="selectedProduct()?.imgSrc || ''"
+      (saveProduct)="saveProduct($event)"
+      ></app-product-details>
     </aside>
     }
       </div>

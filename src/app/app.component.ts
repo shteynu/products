@@ -17,26 +17,33 @@ import {ProductDetailsComponent} from './components/product-details/product-deta
 })
 export class AppComponent {
 
-  public detailsOpen = signal<boolean>(false);
+  detailsOpen = signal<boolean>(false);
+  selectedProduct = signal<{ product: IProduct, imgSrc: string } | null>(null);
+  productStore = inject(ProductStore);
+  productList = this.productStore.productList;
 
-  private productStore = inject(ProductStore);
-  private productList = this.productStore.productList();
+
+  private deleted = false;
 
 
-
-  public getProductList(): IProduct[] {
-    return this.productList;
-  }
-
-  selectProduct(product: IProduct): void {
-    console.log(product);
-    this.detailsOpen.set(!this.detailsOpen());
-
+  selectProduct(product: IProduct, imgSrc: string): void {
+        if (this.selectedProduct()?.product.id === product.id) {
+          this.detailsOpen.set(!this.detailsOpen());
+        } else {
+          this.detailsOpen.set(true);
+          this.selectedProduct.set({product, imgSrc});
+        }
   }
 
   addProduct(event: string): void {
-    console.log(event);
-
+    const newProduct: IProduct = {
+      id: event,
+      name: '',
+      description: '',
+      price: 0,
+      creationDate: new Date().toISOString()
+    }
+    this.selectProduct(newProduct, `https://picsum.photos/seed/${newProduct.id}/200/300`);
   }
 
   onSortChange(event: string): void {
@@ -49,6 +56,13 @@ export class AppComponent {
   }
 
   deleteProduct(event: string): void {
-    console.log(event)
+    this.productStore.deleteProductFromProductList(event);
+    console.log(this.productStore.productList());
+  }
+
+  saveProduct(event: IProduct): void {
+    this.productStore.addOrEditProductToProductList(event);
+    console.log(this.productStore.productList());
+
   }
 }

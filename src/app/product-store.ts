@@ -55,6 +55,15 @@ export const ProductStore = signalStore(
       })
     },
 
+    addOrEditProductToProductList(product: IProduct): void {
+      const existingProduct = store.productList().find(i => i.id === product.id);
+      if(existingProduct) {
+        this.editProductToProductList(product);
+      } else {
+        this.addProductToProductList(product);
+      }
+    },
+
     addProductToProductList(product: IProduct): void {
       const list: IProduct[] = store.productList();
       list.push(product);
@@ -71,9 +80,9 @@ export const ProductStore = signalStore(
       })
     },
 
-    deleteProductFromProductList(product: IProduct): void {
+    deleteProductFromProductList(productId: string): void {
       patchState(store, {
-        productList: store.productList().filter(i => i.id !== product.id),
+        productList: [...store.productList().filter(i => i.id !== productId)],
       })
     }
 

@@ -1,4 +1,4 @@
-<main class="main-section">
+<main class="main-section" (click)="onCardClick($event)">
   <div class="main-section-image">
 <img
   src="{{imageScr()}}"
@@ -11,6 +11,6 @@
   </div>
   <div class="main-section-button">
       <button type="button" class="main-section-button-design"
-        (click)="deleteCard(productData())">Delete</button>
+        (click)="deleteCard($event, productData())">Delete</button>
   </div>
 </main>

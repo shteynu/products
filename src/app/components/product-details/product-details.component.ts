@@ -1,15 +1,53 @@
-import {Component, input, signal} from '@angular/core';
+import {Component, effect, input, OnInit, output, signal} from '@angular/core';
 import {IProduct} from '../../product-store';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-product-details',
-  imports: [],
+  imports: [
+    ReactiveFormsModule
+  ],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })
 export class ProductDetailsComponent {
 
-  prodImg = input<string>('');
-  product = input<IProduct | null>(null);
+  prodImg = input< string >('');
+  product = input<IProduct | undefined>(undefined);
+  productForm = new FormGroup({
+    name: new FormControl(''),
+    description: new FormControl(''),
+    price: new FormControl(0),
+  });
+  saveProduct = output<IProduct>();
+
+  constructor() {
+    effect(() => {
+      const product = this.product();
+      if(product) {
+        this.setFormValues();
+      }
+    });
+  }
+
+  onSubmit(): void {
+    const product = this.product();
+    if(product) {
+      product.name = this.productForm.get('name')?.value || '';
+      product.description = this.productForm.get('description')?.value || '';
+      product.price = this.productForm.get('price')?.value || 0;
+      this.saveProduct.emit(product);
+    }
+
+  }
+
+  private setFormValues() {
+    this.productForm.setValue({
+      name: this.product()?.name || '',
+      description: this.product()?.description || '',
+      price: this.product()?.price || 0,
+    });
+  }
+
 
 }

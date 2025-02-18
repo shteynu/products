@@ -30,19 +30,25 @@
 
     &-product{
       display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
 
-
-      &-product-list {
+      &-list {
         display: flex;
         gap: 10px;
         justify-content: center;
         flex-direction: column;
       }
 
-      &-product-details {
+      &-details {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: column;
+        position: relative;
+        height: 100%;
+        width: 100%;
+        margin-block-start: 16px;
       }
     }
 
