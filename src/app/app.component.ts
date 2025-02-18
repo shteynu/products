@@ -22,10 +22,6 @@ export class AppComponent {
   productStore = inject(ProductStore);
   productList = this.productStore.productList;
 
-
-  private deleted = false;
-
-
   selectProduct(product: IProduct, imgSrc: string): void {
         if (this.selectedProduct()?.product.id === product.id) {
           this.detailsOpen.set(!this.detailsOpen());
@@ -47,22 +43,38 @@ export class AppComponent {
   }
 
   onSortChange(event: string): void {
-    console.log(event);
-
+    switch (event) {
+      case 'name':
+        this.productList = signal(this.productList().sort((a, b) => a.name.localeCompare(b.name)));
+        break;
+      case 'price':
+        this.productList = signal(this.productList().sort((a, b) => a.price - b.price));
+        break;
+        default:
+        this.productList = this.productStore.productList;
+        break;
+    }
   }
 
   onSearchChange(event: string): void {
-    console.log(event);
+    let word = event.trim().toLowerCase();
+    const list = this.productStore.productList().filter(i => {
+      const pName = i.name.toLowerCase().trim();
+      return pName.includes(word)
+    });
+    if(word){
+      this.productList = signal(list);
+    } else {
+      this.productList = this.productStore.productList;
+    }
   }
 
   deleteProduct(event: string): void {
     this.productStore.deleteProductFromProductList(event);
-    console.log(this.productStore.productList());
+    this.productList = this.productStore.productList;
   }
 
   saveProduct(event: IProduct): void {
     this.productStore.addOrEditProductToProductList(event);
-    console.log(this.productStore.productList());
-
   }
 }
